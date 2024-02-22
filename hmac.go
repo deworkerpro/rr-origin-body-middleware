@@ -3,6 +3,7 @@ package hmac
 import (
 	"net/http"
 
+	"github.com/roadrunner-server/http/attributes"
 	"go.uber.org/zap"
 )
 
