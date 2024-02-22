@@ -1,6 +1,7 @@
 package origin
 
 import (
+	"bytes"
 	"net/http"
 	"io/ioutil"
 
