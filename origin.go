@@ -1,4 +1,4 @@
-package hmac
+package origin
 
 import (
 	"net/http"
@@ -7,7 +7,7 @@ import (
 	"go.uber.org/zap"
 )
 
-const name = "hmac"
+const name = "origin"
 
 type Configurer interface {
 	UnmarshalKey(name string, out any) error
