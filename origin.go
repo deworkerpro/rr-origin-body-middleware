@@ -41,7 +41,8 @@ func (p *Plugin) Middleware(next http.Handler) http.Handler {
 			p.log.Fatal("Body read error")
 		}
 		originBody := string(bodyBytes)
-		p.log.Info("Origin", originBody)
+		p.log.Info("Origin")
+		p.log.Info(originBody)
 		r = attributes.Init(r)
 		attributes.Set(r, "origin", originBody)
 		next.ServeHTTP(w, r)
