@@ -39,11 +39,12 @@ func (p *Plugin) Middleware(next http.Handler) http.Handler {
 		bodyBytes, err := ioutil.ReadAll(r.Body)
 		if err != nil {
 			p.log.Fatal("Body read error")
+			http.Error(w, "Body read error", http.StatusBadRequest)
+			return
 		}
 		originBody := string(bodyBytes)
-		p.log.Info("Origin")
-		p.log.Info(originBody)
 		r = attributes.Init(r)
+		r.Body = ioutil.NopCloser(bytes.NewBuffer(bodyBytes))
 		attributes.Set(r, "origin", originBody)
 		next.ServeHTTP(w, r)
 	})
