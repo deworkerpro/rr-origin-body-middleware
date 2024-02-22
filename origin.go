@@ -2,6 +2,7 @@ package origin
 
 import (
 	"net/http"
+	"io/ioutil"
 
 	"github.com/roadrunner-server/http/v4/attributes"
 	"go.uber.org/zap"
@@ -35,9 +36,14 @@ func (p *Plugin) Weight() uint {
 
 func (p *Plugin) Middleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		p.log.Info("i'm here")
+		bodyBytes, err := ioutil.ReadAll(r.Body)
+		if err != nil {
+			p.log.Fatal("Body read error")
+		}
+		originBody := string(bodyBytes)
+		p.log.Info("Origin", originBody)
 		r = attributes.Init(r)
-		attributes.Set(r, "origin", "body")
+		attributes.Set(r, "origin", originBody)
 		next.ServeHTTP(w, r)
 	})
 }
