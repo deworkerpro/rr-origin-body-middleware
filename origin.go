@@ -46,7 +46,7 @@ func (p *Plugin) Middleware(next http.Handler) http.Handler {
 		originBody := string(bodyBytes)
 		r = attributes.Init(r)
 		r.Body = ioutil.NopCloser(bytes.NewBuffer(bodyBytes))
-		attributes.Set(r, "origin", originBody)
+		attributes.Set(r, "origin-body", originBody)
 		next.ServeHTTP(w, r)
 	})
 }
