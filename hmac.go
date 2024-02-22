@@ -35,6 +35,8 @@ func (p *Plugin) Weight() uint {
 func (p *Plugin) Middleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		p.log.Info("i'm here")
+		r = attributes.Init(r)
+		attributes.Set(r, "origin", "body")
 		next.ServeHTTP(w, r)
 	})
 }
